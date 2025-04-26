@@ -86,7 +86,7 @@
 
 <script>
 export default {
-  name: 'Nav',
+  name: 'AppNav',
   data () {
     return {
       isLoading: false,
@@ -148,7 +148,7 @@ export default {
       })
     }
   },
-  beforeDestroy: function () {
+  beforeUnmount: function () {
     // 元件銷毀前要註銷監聽事件
     this.$bus.$off('add-cart')
     this.$bus.$off('nav-getCart')

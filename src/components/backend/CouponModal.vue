@@ -24,7 +24,7 @@
             v-if="isNew">*</span>
             <input
               id="title"
-              v-model="tempCoupon.title"
+              v-model="localCoupon.title"
               type="text"
               class="form-control"
               placeholder="請輸入標題"
@@ -36,7 +36,7 @@
             v-if="isNew">*</span>
             <input
               id="coupon_code"
-              v-model="tempCoupon.code"
+              v-model="localCoupon.code"
               type="text"
               class="form-control"
               placeholder="請輸入優惠碼"
@@ -46,13 +46,13 @@
             <label for="due_date">到期日</label>
             <span class="text-danger ml-1"
             v-if="isNew">*</span>
-            <input id="due_date" v-model="tempCoupon.due_date" type="date" class="form-control" />
+            <input id="due_date" v-model="localCoupon.due_date" type="date" class="form-control" />
           </div>
           <div class="form-group">
             <label for="due_time">到期時間</label>
             <span class="text-danger ml-1"
             v-if="isNew">*</span>
-            <input id="due_time" v-model="tempCoupon.due_time" type="time" step="1" class="form-control" />
+            <input id="due_time" v-model="localCoupon.due_time" type="time" step="1" class="form-control" />
           </div>
           <div class="form-group">
             <label for="price">折扣百分比</label>
@@ -60,7 +60,7 @@
             v-if="isNew">*</span>
             <input
               id="price"
-              v-model="tempCoupon.percent"
+              v-model="localCoupon.percent"
               type="number"
               class="form-control"
               placeholder="請輸入折扣數量"
@@ -70,7 +70,7 @@
             <div class="form-check">
               <input
                 id="enabled"
-                v-model="tempCoupon.enabled"
+                v-model="localCoupon.enabled"
                 class="form-check-input"
                 type="checkbox"
               />
@@ -104,7 +104,8 @@ export default {
   },
   data () {
     return {
-      isLoading: false
+      isLoading: false,
+      localCoupon: { ...this.tempCoupon } // 深拷貝，避免直接修改父層的資料
     }
   },
   methods: {
@@ -122,17 +123,17 @@ export default {
         status = '新增成功囉，好棒ヽ(＾Д＾)ﾉ '
       } else {
         // 編輯商品
-        api = `${process.env.VUE_APP_APIPATH}${process.env.VUE_APP_UUID}/admin/ec/coupon/${this.tempCoupon.id}`
+        api = `${process.env.VUE_APP_APIPATH}${process.env.VUE_APP_UUID}/admin/ec/coupon/${this.localCoupon.id}`
         httpMethod = 'patch'
         status = '更新成功囉，好棒ヽ(＾Д＾)ﾉ '
       }
 
       // 針對日期做組合重新寫入到物件中
       // 日期格式 Y-m-d H:i:s，例如：「2020-06-16 09:31:18」
-      this.tempCoupon.deadline_at = `${this.tempCoupon.due_date} ${this.tempCoupon.due_time}`
+      this.localCoupon.deadline_at = `${this.localCoupon.due_date} ${this.localCoupon.due_time}`
 
       // 用 httpMethod 帶入是用post還是patch
-      this.$http[httpMethod](api, this.tempCoupon).then((response) => {
+      this.$http[httpMethod](api, this.localCoupon).then((response) => {
         this.isLoading = false
         $('#couponModal').modal('hide')
 

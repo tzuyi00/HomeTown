@@ -76,29 +76,29 @@ export default {
       this.$bus.$emit('message:push', '已複製序號，快去購物吧！', 'success')
     },
     scratchInit () {
-      var myCanvas = document.getElementById('myCanvas')
-      var parentDOM = document.getElementById('myCanvas').parentNode
-      var can = myCanvas.getContext('2d')
-      var rect = myCanvas.getBoundingClientRect()
+      const myCanvas = document.getElementById('myCanvas')
+      const parentDOM = document.getElementById('myCanvas').parentNode
+      const can = myCanvas.getContext('2d')
+      const rect = myCanvas.getBoundingClientRect()
 
       myCanvas.width = parentDOM.clientWidth
       myCanvas.height = parentDOM.clientHeight
 
       // 获取当前画布的宽高
-      var X = myCanvas.width
-      var Y = myCanvas.height
+      const X = myCanvas.width
+      const Y = myCanvas.height
 
       // 用填充顏色當圖片
-      var myGradient = can.createLinearGradient(0, 0, X, Y)
+      const myGradient = can.createLinearGradient(0, 0, X, Y)
       myGradient.addColorStop(0, '#E6E4E0')
       myGradient.addColorStop(1, '#CFCBC4')
       can.fillStyle = myGradient
       can.fillRect(0, 0, X, Y)
 
-      var device = /android|iphone|ipad|ipod|webos|iemobile|opear mini|linux/i.test(navigator.userAgent.toLowerCase())
-      var startEvtName = device ? 'touchstart' : 'mousedown'
-      var moveEvtName = device ? 'touchmove' : 'mousemove'
-      var endEvtName = device ? 'touchend' : 'mouseup'
+      const device = /android|iphone|ipad|ipod|webos|iemobile|opear mini|linux/i.test(navigator.userAgent.toLowerCase())
+      const startEvtName = device ? 'touchstart' : 'mousedown'
+      const moveEvtName = device ? 'touchmove' : 'mousemove'
+      const endEvtName = device ? 'touchend' : 'mouseup'
 
       /* 增加触摸监听 */
       myCanvas.addEventListener(startEvtName, function () {
@@ -112,8 +112,8 @@ export default {
       /* 根据手指移动画线，使之变透明 */
       function draw (event) {
         event.preventDefault()
-        var x = device ? event.touches[0].pageX - rect.x : event.offsetX
-        var y = device ? event.touches[0].pageY - rect.y : event.offsetY
+        const x = device ? event.touches[0].pageX - rect.x : event.offsetX
+        const y = device ? event.touches[0].pageY - rect.y : event.offsetY
 
         can.beginPath()
         can.globalCompositeOperation = 'destination-out'
@@ -125,15 +125,15 @@ export default {
       // 扣除到一定程度,自己打开
       document.addEventListener(endEvtName, function () {
         /* 获取imageData对象 */
-        var imageDate = can.getImageData(0, 0, myCanvas.width, myCanvas.height)
+        const imageDate = can.getImageData(0, 0, myCanvas.width, myCanvas.height)
 
         // 所有像素點數
-        var allPX = imageDate.width * imageDate.height
+        const allPX = imageDate.width * imageDate.height
 
         // 刮开的像素点个数
-        var iNum = 0
+        let iNum = 0
 
-        for (var i = 0; i < allPX; i++) {
+        for (let i = 0; i < allPX; i++) {
           if (imageDate.data[i * 4 + 3] === 0) {
             iNum++
           }
@@ -145,10 +145,10 @@ export default {
       }, true)
 
       // 建立折扣
-      var arr = ['9', '8', '5']
+      const arr = ['9', '8', '5']
 
       function shuffle (arr) {
-        for (var j, x, i = arr.length; i;) {
+        for (let j, x, i = arr.length; i;) {
           j = Math.floor(Math.random() * i)
           x = arr[--i]
           arr[i] = arr[j]

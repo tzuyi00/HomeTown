@@ -79,7 +79,7 @@ export default {
       $(`#${element}`).toast('hide')
     }
   },
-  beforeDestroy: function () {
+  beforeUnmount: function () {
     // 元件銷毀前要註銷監聽事件
     this.$bus.$off('message:push')
   }

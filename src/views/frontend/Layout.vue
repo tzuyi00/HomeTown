@@ -1,6 +1,6 @@
 <template>
   <div>
-    <Nav/>
+    <AppNav/>
     <router-view></router-view>
     <footer class="container-fluid">
       <div class="row contactUs">
@@ -96,12 +96,12 @@
 <script>
 /* global $ */
 
-import Nav from '@/components/Nav.vue'
+import AppNav from '@/components/Nav.vue'
 
 export default {
   name: 'Layout',
   components: {
-    Nav
+    AppNav
   },
   data () {
     return {
